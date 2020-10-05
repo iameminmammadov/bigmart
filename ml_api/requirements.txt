@@ -1,0 +1,5 @@
+#api
+flask==1.1.2
+
+# local model package
+-e '~/PycharmProjects/bigmart'
