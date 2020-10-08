@@ -16,7 +16,7 @@ jobs:
             pip install -r  requirements.txt
             chmod +x ./scripts/fetch_dataset.sh
             ./scripts/fetch_dataset.sh
-            py.test -vv datacube_bigmart/tests
+            py.test -vv packages/datacube_bigmart/tests
 workflows:
   version: 2
   test-all:
