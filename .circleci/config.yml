@@ -13,7 +13,7 @@ jobs:
             virtualenv venv
             . venv/bin/activate
             pip install --upgrade pip
-            pip install -r  requirements.txt
+            pip install -r  packages/datacube_bigmart/requirements.txt
             chmod +x ./scripts/fetch_dataset.sh
             ./scripts/fetch_dataset.sh
             py.test -vv packages/datacube_bigmart/tests
