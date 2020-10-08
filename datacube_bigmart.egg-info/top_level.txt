@@ -1,2 +1,0 @@
-datacube_bigmart
-ml_api
