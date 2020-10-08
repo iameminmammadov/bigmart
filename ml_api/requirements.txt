@@ -1,0 +1,11 @@
+--extra-index-url=${PIP_EXTRA_INDEX_URL}
+
+#api
+flask==1.0.2
+
+#schema validation
+#marshmallow==2.17.0
+
+#Install from gemfury
+datacube_bigmart==0.1.0 #check name
+
