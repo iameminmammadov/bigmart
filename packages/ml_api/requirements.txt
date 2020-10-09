@@ -1,7 +1,9 @@
+--extra-index-url=${PIP_EXTRA_INDEX_URL}
+
 # api
 flask==1.0.2
 
-# local regression_model package
-# update with your local path
--e "~/GitHub/bigmart/packages/datacube_bigmart/"
+#Custom package to be installed from gemfury
+datacube-bigmart==0.1.1
+
 
