@@ -12,7 +12,7 @@ jobs:
             virtualenv venv
             . venv/bin/activate
             pip install --upgrade pip
-            pip install -r  packages/datacube_bigmart/requirements.txt
+            pip install -r packages/datacube_bigmart/requirements.txt
             chmod +x ./scripts/fetch_dataset.sh
             ./scripts/fetch_dataset.sh
             py.test -vv packages/datacube_bigmart/tests
@@ -47,8 +47,9 @@ jobs:
           name: Publish model
           command: |
             . venv/bin/activate
-            chmod +x ./scripts/fetch_dataset.sh ./scripts/publish_package.sh
+            chmod +x ./scripts/fetch_dataset.sh ./scripts/publish_package.sh ./scripts/retrain_package.sh
             ./scripts/fetch_dataset.sh
+            ./scripts/retrain_package.sh
             python packages/datacube_bigmart/datacube_bigmart/train_pipeline.py
             ./scripts/publish_package.sh 
 

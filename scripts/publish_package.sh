@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
-BASE_DIR=$(pwd)
-cd '..'
-cd "$BASE_DIR/packages/datacube_bigmart"
-echo "Changing directory"
-pwd
-python setup.py sdist
 echo "Creating a tar package"
 cd '..'
 tar -cvzf datacube_bigmart.tar.gz datacube_bigmart
