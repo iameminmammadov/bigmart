@@ -9,7 +9,6 @@ jobs:
       - run:
           name: Runnning tests
           command: |
-            ls -al
             virtualenv venv
             . venv/bin/activate
             pip install --upgrade pip
@@ -17,8 +16,31 @@ jobs:
             chmod +x ./scripts/fetch_dataset.sh
             ./scripts/fetch_dataset.sh
             py.test -vv packages/datacube_bigmart/tests
+  upload_bigmart_model:
+    working_directory: ~/project
+    docker:
+        - image: circleci/python:3.7.2
+    steps:
+      - checkout
+      - run: 
+          name: Setup env
+          command: |
+            virtualenv venv
+            . venv/bin/activate
+            pip install -r  packages/datacube_bigmart/requirements.txt
+      - run: 
+          name: Publish model
+          command: |
+            . venv/bin/activate
+            chmod +x ./scripts/fetch_dataset.sh ./scripts/publish_package.sh
+            ./scripts/fetch_dataset.sh
+            ./scripts/publish_package.sh 
+
+  
+
 workflows:
   version: 2
   test-all:
     jobs:
       - test_bigmart_model
+      - upload_bigmart_model
