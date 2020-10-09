@@ -58,8 +58,6 @@ def run_training():
     pipeline = bmp.pipeline(search_space)
     pipe = pipeline.fit(X_train, y_train)
 
-    #pipe = dm.load_pipeline()
-
     y_pred = pipe.predict(X_test)
     print('MAE: ', mae(y_test, y_pred))
 
