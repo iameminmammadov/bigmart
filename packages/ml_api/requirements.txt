@@ -1,7 +1,8 @@
---extra-index-url=${PIP_EXTRA_INDEX_URL}
+--index-url https://pypi.fury.io/iameminmammadov/
+--extra-index-url https://pypi.org/simple/
 
 # api
-flask==1.0.2
+flask==1.1.2
 
 #Custom package to be installed from gemfury
 datacube-bigmart==0.1.1
