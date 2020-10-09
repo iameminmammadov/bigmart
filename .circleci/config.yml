@@ -34,7 +34,7 @@ jobs:
             . venv/bin/activate
             chmod +x ./scripts/fetch_dataset.sh ./scripts/publish_package.sh
             ./scripts/fetch_dataset.sh
-            ./scripts/publish_model.sh 
+            ./scripts/publish_package.sh 
 
   
 
