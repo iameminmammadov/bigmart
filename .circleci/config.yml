@@ -16,6 +16,21 @@ jobs:
             chmod +x ./scripts/fetch_dataset.sh
             ./scripts/fetch_dataset.sh
             py.test -vv packages/datacube_bigmart/tests
+  test_ml_api:
+    working_directory: ~/project
+    docker:
+      - image: circleci/python:3.6.8
+    steps:
+      - checkout
+      - run:
+          name: Runnning tests
+          command: |
+            virtualenv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r packages/ml_api/requirements.txt
+            py.test -vv packages/ml_api/tests
+
   upload_bigmart_model:
     working_directory: ~/project
     docker:
@@ -27,7 +42,7 @@ jobs:
           command: |
             virtualenv venv
             . venv/bin/activate
-            pip install -r  packages/datacube_bigmart/requirements.txt
+            pip install -r packages/datacube_bigmart/requirements.txt
       - run: 
           name: Publish model
           command: |
@@ -43,4 +58,8 @@ workflows:
   test-all:
     jobs:
       - test_bigmart_model
+      - test_ml_api
       - upload_bigmart_model
+      - test_ml_api:
+          requires:
+            - upload_bigmart_model
