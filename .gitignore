@@ -110,3 +110,5 @@ venv.bak/
 packages/datacube_bigmart/datacube_bigmart/datasets/*.csv
 packages/datacube_bigmart/datacube_bigmart/datasets/*.zip
 packages/datacube_bigmart/datacube_bigmart/datasets/*.txt
+
+*.gz

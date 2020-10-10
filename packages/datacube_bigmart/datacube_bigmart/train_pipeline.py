@@ -54,7 +54,6 @@ def run_training():
         }
     ]
 
-    
     pipeline = bmp.pipeline(search_space)
     pipe = pipeline.fit(X_train, y_train)
 
