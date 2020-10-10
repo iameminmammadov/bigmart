@@ -5,4 +5,4 @@ cd "$BASE_DIR/packages/datacube_bigmart"
 echo "Changing directory"
 pwd
 pip install --upgrade pip
-python setup.py sdist
+python setup.py install --force

@@ -5,8 +5,7 @@ include *.pkl
 recursive-include ./datacube_bigmart/*
 
 
-include datacube_bigmart/datasets/train.csv
-include datacube_bigmart/datasets/test.csv
+include datacube_bigmart/datasets/*.csv
 include datacube_bigmart/trained_models/*.pkl
 
 

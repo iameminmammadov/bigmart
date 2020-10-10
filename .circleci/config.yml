@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Runnning tests
+          name: Running tests
           command: |
             virtualenv venv
             . venv/bin/activate
@@ -23,7 +23,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Runnning tests
+          name: Running tests
           command: |
             virtualenv venv
             . venv/bin/activate

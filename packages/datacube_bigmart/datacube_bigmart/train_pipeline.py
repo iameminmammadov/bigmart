@@ -41,8 +41,8 @@ def run_training():
         'clf__min_samples_split': [2, 5, 10],
         'clf__min_samples_leaf': [1, 2, 4],
         'clf__bootstrap': [True, False]
-     },
-    {
+            },
+        {
         'clf': [XGBRegressor()],
         'clf__max_depth': [3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         'clf__min_child_weight': np.arange(0.0001, 0.5, 0.001),
@@ -51,10 +51,10 @@ def run_training():
         'clf__subsample': np.arange(0.01,1.0,0.01),
         'clf__colsample_bylevel': np.round(np.arange(0.1,1.0,0.01)),
         'clf__colsample_bytree': np.arange(0.1,1.0,0.01)
-    }
-]
+        }
+    ]
 
-
+    
     pipeline = bmp.pipeline(search_space)
     pipe = pipeline.fit(X_train, y_train)
 
@@ -68,4 +68,4 @@ def run_training():
 
 
 if __name__ == '__main__':
-    run_training()
+    pipe=run_training()

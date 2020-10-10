@@ -45,7 +45,10 @@ class DataManagement():
 
         save_file_name = f"{config.PIPELINE_SAVE_FILE }{__version__}.pkl"
         save_path = join(config.TRAINED_MODEL_DIR, save_file_name)
+        if not exists(config.TRAINED_MODEL_DIR):
+            os.makedirs(config.TRAINED_MODEL_DIR)
         joblib.dump(pipeline_to_persist, save_path)
+        print (save_path)
         self.logger.info(f"saved pipeline: {save_file_name}")
 
     def load_pipeline(self):
