@@ -14,8 +14,8 @@ def test_load_dataset():
     loaded_test = pd.read_csv(obj_test['Body'])
 
     CWD = os.getcwd()
-    path_to_train = os.path.join(CWD, 'datacube_bigmart/datasets/Train.csv')
-    path_to_test = os.path.join(CWD, 'datacube_bigmart/datasets/Test.csv')
+    path_to_train = os.path.join(CWD, 'datacube_bigmart/datacube_bigmart/datasets/Train.csv')
+    path_to_test = os.path.join(CWD, 'datacube_bigmart/datacube_bigmart/datasets/Test.csv')
     train_true = pd.read_csv(path_to_train)
     test_true = pd.read_csv(path_to_test)
     pd_testing.assert_frame_equal(loaded_train, train_true)
