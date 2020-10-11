@@ -5,35 +5,15 @@ from os.path import join, exists
 import joblib
 from datacube_bigmart.version import __version__
 import logging
+import boto3
+import tempfile
+
 
 
 class DataManagement():
     def __init__(self, save_file_name=None):
         self.save_file_name = save_file_name
         self.logger = logging.getLogger(__name__)
-
-    def load_dataset(self, *datasets):
-        """Loads dataset.
-        :param *args: passed datasets (could train, test or both)
-        :return _data_train DataFrame: returns loaded train data set
-        :return _data_test DataFrame: returns loaded test data set
-        """
-
-        if len(datasets) == 0:
-            raise ValueError('Please provide either training, or testing, or both data sets')
-        elif len(datasets) == 1:
-            if 'Train' in datasets[0]:
-                _data_train = pd.read_csv(f"{config.DATASET_DIR}/{datasets[0]}")
-                print ('Passed file is a Training set')
-                return _data_train
-            else:
-                _data_test = pd.read_csv(f"{config.DATASET_DIR}/{datasets[0]}")
-                print ('Passed file is a Testing set')
-                return _data_test
-        elif len(datasets) == 2:
-            _data_train = pd.read_csv(f"{config.DATASET_DIR}/{datasets[0]}")
-            _data_test = pd.read_csv(f"{config.DATASET_DIR}/{datasets[1]}")
-            return _data_train, _data_test
 
     def save_pipeline(self, pipeline_to_persist):
         """
@@ -44,11 +24,11 @@ class DataManagement():
         """
 
         save_file_name = f"{config.PIPELINE_SAVE_FILE }{__version__}.pkl"
-        save_path = join(config.TRAINED_MODEL_DIR, save_file_name)
-        if not exists(config.TRAINED_MODEL_DIR):
-            os.makedirs(config.TRAINED_MODEL_DIR)
-        joblib.dump(pipeline_to_persist, save_path)
-        print (save_path)
+        s3 = boto3.resource('s3')
+        with tempfile.TemporaryFile() as fp:
+            joblib.dump(pipeline_to_persist, fp)
+            fp.seek(0)
+            s3.Bucket('bigmart-trained-models').put_object(Key=save_file_name, Body=fp.read())
         self.logger.info(f"saved pipeline: {save_file_name}")
 
     def load_pipeline(self):
@@ -58,8 +38,11 @@ class DataManagement():
         :return pipeline: Returns a pipeline that is a sklearn object
         """
         save_file_name = f"{config.PIPELINE_SAVE_FILE }{__version__}.pkl"
-        file_path = join(config.TRAINED_MODEL_DIR, save_file_name)
-        pipeline = joblib.load(file_path)
+        s3 = boto3.resource('s3')
+        with tempfile.TemporaryFile() as fp:
+            s3.Bucket('bigmart-trained-models').download_fileobj( Key=save_file_name, Fileobj=fp)
+            fp.seek(0)
+            pipeline = joblib.load(fp)
         self.logger.info(f"loading pipeline: {save_file_name}")
         return pipeline
 

@@ -1,5 +1,4 @@
 import logging
-
 from sklearn.model_selection import train_test_split
 from datacube_bigmart.pipeline import BigMartPipeline
 from datacube_bigmart.data_management import DataManagement
@@ -10,7 +9,7 @@ import pandas as pd
 import numpy as np
 from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
-import logging
+import boto3
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -20,7 +19,12 @@ logger = logging.getLogger(__name__)
 def run_training():
 
     dm = DataManagement()
-    data = dm.load_dataset(config.TRAINING_DATA_FILE)
+    bmp = BigMartPipeline()
+    s3 = boto3.client('s3')
+
+    obj = s3.get_object(Bucket='bigmart-dataset', Key='Train.csv')
+    data = pd.read_csv(obj['Body'])
+
     X = data.iloc[:, :-1]
     y = data['Item_Outlet_Sales']
     train_ratio = 0.70
@@ -28,11 +32,7 @@ def run_training():
     X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                         test_size=1 - train_ratio,
                                                         random_state=42)
-
-
-    bmp = BigMartPipeline()
-    dm = DataManagement()
-
+    '''
     search_space = [{
         'clf': [RandomForestRegressor()],
         'clf__n_estimators': [int(x) for x in np.linspace(start = 0, stop = 100, num = 50)],
@@ -53,6 +53,9 @@ def run_training():
         'clf__colsample_bytree': np.arange(0.1,1.0,0.01)
         }
     ]
+    '''
+    search_space = [{
+        'clf': [RandomForestRegressor()]}]
 
     pipeline = bmp.pipeline(search_space)
     pipe = pipeline.fit(X_train, y_train)

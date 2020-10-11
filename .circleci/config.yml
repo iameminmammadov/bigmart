@@ -4,6 +4,10 @@ jobs:
     working_directory: ~/project
     docker:
       - image: circleci/python:3.7
+        auth:
+          aws_access_key_id: $aws_access_key_id
+          aws_secret_access_key: $aws_secret_access_key
+          region: $region
     steps:
       - checkout
       - run:

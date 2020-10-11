@@ -18,4 +18,10 @@ def make_prediction(test_data):
     _logger.info(f"Predictions are made with model version: {model_version}")
     results = {"predictions": y_pred, "version": model_version}
     return results
-
+'''
+import boto3
+s3 = boto3.client('s3')
+obj_test = s3.get_object(Bucket='bigmart-dataset', Key='Test.csv')
+loaded_test = pd.read_csv(obj_test['Body'])
+make_prediction(loaded_test)
+'''
