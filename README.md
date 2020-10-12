@@ -92,6 +92,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@LinkedIn](https://www.linkedin.com/in/emin-mammadov/) - emin.e.mammadov@gmail.com
+Emin Mammadov - [@LinkedIn](https://www.linkedin.com/in/emin-mammadov/) - emin.e.mammadov@gmail.com - emin.e.mammadov@protonmail.com
 
 Project Link: [https://github.com/iameminmammadov/bigmart](https://github.com/iameminmammadov/bigmart)
