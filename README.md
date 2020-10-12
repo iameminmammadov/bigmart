@@ -45,7 +45,7 @@ Here the tools that you will learn (I will teach you) in order to understand how
 * [AWS](https://aws.amazon.com/)
 * [Tox](https://tox.readthedocs.io/en/latest/)
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
-* [Gemfury] (https://gemfury.com/)
+* [Gemfury](https://gemfury.com/)
 
 
 
