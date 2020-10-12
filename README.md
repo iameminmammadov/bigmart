@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="images/logo_lhl.png" alt="Logo" width="80" height="80">
+    <img src="images/logo_lhl.png" alt="Logo" width="500" height="200">
   </a>
 
   <h3 align="center">Bigmart Project</h3>
