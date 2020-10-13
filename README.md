@@ -25,7 +25,7 @@ This project has been created as part of my contract work with Lighthouse Labs: 
 Leading Coding Bootcamp. As the instructor and mentor for the data science bootcamp, I 
 was tasked with developing a project that will combine several concepts taught. This project
 includes:
-* Analysis of the [BigMart sales data] (https://www.kaggle.com/brijbhushannanda1979/bigmart-sales-data)
+* Analysis of the [BigMart sales data](https://www.kaggle.com/brijbhushannanda1979/bigmart-sales-data)
 * Writing a production-ready pipeline with the focus on object-oriented programming
 * Developing an API using Flask-RESTful
 * Writing tests for both the pipeline and API
@@ -87,7 +87,7 @@ After that, I will review it and either merge, or comment back.
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/iameminmammadov/bigmart/blob/main/licence.txt) for more information.
 
 <!-- CONTACT -->
 ## Contact
