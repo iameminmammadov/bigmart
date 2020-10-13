@@ -38,7 +38,7 @@ This project includes two branches:
 added the parameters hypertuning for several models as part of the pipeline.
 
 
-### Built With
+### Built Using
 Here the tools that you will learn (I will teach you) in order to understand how this project works:
 * [Python](https://www.python.org/downloads/)
 * [CircleCI](https://circleci.com/)
