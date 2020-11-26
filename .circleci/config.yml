@@ -1,47 +1,66 @@
 version: 2
+
+defaults: &defaults
+  docker:
+    - image: circleci/python:3.6
+  working_directory: ~/project
+
+prepare_venv: &prepare_venv
+  run:
+    name: Create venv
+    command: |
+      python3 -m venv venv
+      source venv/bin/activate
+      pip install --upgrade pip
+
+fetch_data: &fetch_data
+  run:
+    name: Set script permissions and fetch data
+    command: |
+      source venv/bin/activate
+      chmod +x ./scripts/fetch_dataset.sh ./scripts/credentials.sh
+
 jobs:
   test_bigmart_model:
-    working_directory: ~/project
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.6
+    working_directory: ~/project/packages/datacube_bigmart
     steps:
       - checkout
+      - *prepare_venv
       - run:
-          name: Running tests
+          name: Installing Requirements
           command: |
-            virtualenv venv
-            . venv/bin/activate
-            pip install --upgrade pip
-            pip install -r packages/datacube_bigmart/requirements.txt
-            chmod +x ./scripts/fetch_dataset.sh ./scripts/credentials.sh
-            ./scripts/fetch_dataset.sh
-            py.test -vv packages/datacube_bigmart/tests
+            pip install -r requirements.txt
+            python setup.py install --force
+      - *fetch_data
+      - run:
+            name: Fetching Data
+      - run:
+            name: Running Tests for Bigmart Model
+            py.test -vv tests
+
   test_ml_api:
-    working_directory: ~/project
-    docker:
-      - image: circleci/python:3.7
+    <<: *defaults
     steps:
       - checkout
+      - *prepare_venv
       - run:
-          name: Running tests
+          name: Installing Requirements
           command: |
-            virtualenv venv
-            . venv/bin/activate
-            pip install --upgrade pip
             pip install -r packages/ml_api/requirements.txt
+      - run:
+            name: Running Tests for API
             py.test -vv packages/ml_api/tests
 
   train_and_upload_bigmart_model:
-    working_directory: ~/project
-    docker:
-        - image: circleci/python:3.7.2
+    <<: *defaults
     steps:
       - checkout
-      - run: 
-          name: Setup env
+      - *prepare_venv
+      - run:
+          name: Installing Requirements
           command: |
-            virtualenv venv
-            . venv/bin/activate
             pip install -r packages/datacube_bigmart/requirements.txt
       - run: 
           name: Publish model
@@ -50,8 +69,6 @@ jobs:
             chmod +x ./scripts/fetch_dataset.sh ./scripts/publish_retrain_package.sh
             ./scripts/fetch_dataset.sh
             ./scripts/publish_retrain_package.sh
-
-  
 
 workflows:
   version: 2
