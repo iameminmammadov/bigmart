@@ -35,7 +35,9 @@ jobs:
             python setup.py install --force
       - *fetch_data
       - run:
-          name: Fetching Data
+          name: Fetching data
+          command: |
+            ./scripts/fetch_dataset.sh
       - run:
           name: Running Tests for Bigmart Model
           command: |
@@ -51,7 +53,8 @@ jobs:
           command: |
             pip install -r packages/ml_api/requirements.txt
       - run:
-            name: Running Tests for API
+          name: Running Tests for API
+          command: |
             py.test -vv packages/ml_api/tests
 
   train_and_upload_bigmart_model:
@@ -63,12 +66,15 @@ jobs:
           name: Installing Requirements
           command: |
             pip install -r packages/datacube_bigmart/requirements.txt
+      - *fetch_data
+        - run:
+            name: Fetching data
+            command: |
+              ./scripts/fetch_dataset.sh
       - run: 
           name: Publish model
           command: |
             . venv/bin/activate
-            chmod +x ./scripts/fetch_dataset.sh ./scripts/publish_retrain_package.sh
-            ./scripts/fetch_dataset.sh
             ./scripts/publish_retrain_package.sh
 
 workflows:
