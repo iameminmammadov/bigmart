@@ -1,14 +1,16 @@
-import io 
+import io
 from os.path import dirname, abspath, join
 import setuptools
 
-def list_reqs(fname='requirements.txt'):
+ROOT_DIR = abspath(dirname(__file__))
+PACKAGE_DIR = join(ROOT_DIR, 'datacube_bigmart')
+VERSION_PATH = join(PACKAGE_DIR, 'version.py')
+
+
+def list_reqs(fname=join(ROOT_DIR, 'requirements.txt')):
     with open(fname) as fd:
         return fd.read().splitlines()
 
-ROOT_DIR = abspath(dirname(__file__))
-PACKAGE_DIR = join(ROOT_DIR,'datacube_bigmart')
-VERSION_PATH = join(PACKAGE_DIR,'version.py')
 
 version = {}
 with open(VERSION_PATH) as fp:
@@ -31,4 +33,3 @@ setuptools.setup(name='datacube-bigmart',
                  ],
                  python_requires='>=3.6.0'
                  )
-
