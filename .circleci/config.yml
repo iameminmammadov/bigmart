@@ -35,9 +35,10 @@ jobs:
             python setup.py install --force
       - *fetch_data
       - run:
-            name: Fetching Data
+          name: Fetching Data
       - run:
-            name: Running Tests for Bigmart Model
+          name: Running Tests for Bigmart Model
+          command: |
             py.test -vv tests
 
   test_ml_api:
