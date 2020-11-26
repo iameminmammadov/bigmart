@@ -64,16 +64,17 @@ jobs:
           name: Installing Requirements
           command: |
             pip install -r packages/datacube_bigmart/requirements.txt
-      - *fetch_data
       - run:
-          name: Fetching data
+          name: Publish model to AWS ECR
           command: |
-            ./scripts/fetch_dataset.sh
-      - run: 
-          name: Publish model
-          command: |
-            . venv/bin/activate
-            ./scripts/publish_retrain_package.sh
+            source venv/bin/activate
+            pwd
+            ls
+            chmod +x ./scripts/retrain_step.sh
+            chmod +x ./scripts/pushing_docker_ecr.sh
+            chmod +x ./scripts/publish_gemfury.sh
+            docker built -t bigmart_lhl .
+
 
 workflows:
   version: 2
