@@ -73,7 +73,7 @@ jobs:
             chmod +x ./scripts/retrain_step.sh
             chmod +x ./scripts/pushing_docker_ecr.sh
             chmod +x ./scripts/publish_gemfury.sh
-            docker built -t bigmart_lhl .
+            docker build -t bigmart_lhl .
 
 
 workflows:
