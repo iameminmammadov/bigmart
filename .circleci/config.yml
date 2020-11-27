@@ -67,9 +67,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apk update
             apk add --no-cache py-pip
             pip install awscli
-            apk update && apk add bash
+            apk add bash
       - run:
           name: Publish model to AWS ECR
           command: |
