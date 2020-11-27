@@ -29,7 +29,6 @@ jobs:
       - run:
           name: Installing Requirements
           command: |
-            pwd
             sudo python packages/datacube_bigmart/setup.py install --force
       - *fetch_data
       - run:
@@ -55,7 +54,7 @@ jobs:
           command: |
             py.test -vv packages/ml_api/tests
 
-  upload_bigmart_model:
+  upload_bigmart_model_ecr:
     docker:
       - image: docker:17.05.0-ce-git
     working_directory: ~/project
@@ -78,6 +77,20 @@ jobs:
             docker build -t bigmart_lhl .
             ./scripts/pushing_docker_ecr.sh
 
+  upload_bigmart_model_gfury:
+    <<: *defaults
+    steps:
+      - checkout
+      - *prepare_venv
+      - run:
+          name: Install Dependencies and Package
+          command: |
+            python packages/datacube_bigmart/setup.py install --force
+      - run:
+          name: Publish Model to Gemfury
+          command: |
+            chmod +x ./scripts/publish_gemfury.sh
+            ./scripts/publish_gemfury.sh
 
 workflows:
   version: 2
@@ -85,7 +98,8 @@ workflows:
     jobs:
       - test_bigmart_model
       - test_ml_api
-      - upload_bigmart_model
+      - upload_bigmart_model_ecr
+      - upload_bigmart_model_gfury
       - test_ml_api:
           requires:
             - upload_bigmart_model
