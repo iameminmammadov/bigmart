@@ -85,7 +85,7 @@ jobs:
       - run:
           name: Install Dependencies and Package
           command: |
-            python packages/datacube_bigmart/setup.py install --force
+            sudo python packages/datacube_bigmart/setup.py install --force
       - run:
           name: Publish Model to Gemfury
           command: |
