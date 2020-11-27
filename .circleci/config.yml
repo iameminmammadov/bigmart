@@ -102,4 +102,5 @@ workflows:
       - upload_bigmart_model_gfury
       - test_ml_api:
           requires:
-            - upload_bigmart_model
+            - upload_bigmart_model_ecr
+            - upload_bigmart_model_gfury
