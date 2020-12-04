@@ -85,9 +85,13 @@ jobs:
       - run:
           name: Connecting to EC2
           command: |
+
             PUBLIC_IP=$(curl ipinfo.io/ip)
-            aws ec2 authorize-security-group-ingress --region $AWS_DEFAULT_REGION --group-id $SG_ID \
-                  --protocol tcp --port 22 --cidr $PUBLIC_IP/24
+            echo "Before_1"
+            ssh -p 22 ubuntu@ec2-18-204-3-167.compute-1.amazonaws.com
+            echo "After_1"
+
+
 
 
 
