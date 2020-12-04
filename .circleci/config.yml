@@ -77,6 +77,19 @@ jobs:
             docker build -t bigmart_lhl .
             ./scripts/pushing_docker_ecr.sh
 
+  run_bigmart_ec2:
+    <<: *defaults
+    steps:
+      - checkout
+      - *prepare_venv
+      - run:
+          name: Connecting to EC2
+          command: |
+            PUBLIC_IP=$(curl ipinfo.io/ip)
+            ~/bin/aws ec2 authorize-security-group-ingress --region $AWS_REGION \
+                --protocol tcp --port 22 --cidr $PUBLIC_IP/24
+            ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS
+
   upload_bigmart_model_gfury:
     <<: *defaults
     steps:
@@ -84,7 +97,7 @@ jobs:
       - *prepare_venv
       - run:
           name: Install Dependencies and Package
-          command: |
+          command:
             sudo python packages/datacube_bigmart/setup.py install --force
       - run:
           name: Publish Model to Gemfury
@@ -94,6 +107,7 @@ jobs:
 
 workflows:
   version: 2
+
   test-all:
     jobs:
       - test_bigmart_model
@@ -104,3 +118,4 @@ workflows:
           requires:
             - upload_bigmart_model_ecr
             - upload_bigmart_model_gfury
+      -
