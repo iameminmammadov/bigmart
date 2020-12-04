@@ -85,8 +85,11 @@ jobs:
       - run:
           name: Connecting to EC2
           command: |
-            sudo apt-get install awscli
-            ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS
+            ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS \
+            "echo Start deploy && \
+            $(aws ecr get-login --region ca-central-1 --no-include-email) && \
+            docker pull 122845611906.dkr.ecr.ca-central-1.amazonaws.com/bigmart_docker_ecr:latest && \
+            echo Deploy end"
 
 
 
