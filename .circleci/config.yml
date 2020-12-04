@@ -118,5 +118,5 @@ workflows:
           requires:
             - upload_bigmart_model_ecr
             - upload_bigmart_model_gfury
-      - run_bigmart_ec2:
-      
+      - run_bigmart_ec2
+
