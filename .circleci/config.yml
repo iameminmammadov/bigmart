@@ -89,9 +89,7 @@ jobs:
             unzip awscli-bundle.zip
             ./awscli-bundle/install -b ~/bin/aws
             PUBLIC_IP=$(curl ipinfo.io/ip)
-            ~/bin/aws ec2 authorize-security-group-ingress --region $AWS_DEFAULT_REGION --group-id $SG_ID \
-                                      --protocol tcp --port 22 --cidr $PUBLIC_IP/24
-            ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS
+            echo $SG_ID
 
   upload_bigmart_model_gfury:
     <<: *defaults
