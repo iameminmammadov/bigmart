@@ -85,16 +85,10 @@ jobs:
       - run:
           name: Connecting to EC2
           command: |
-
             PUBLIC_IP=$(curl ipinfo.io/ip)
             echo "Before_1"
-            ssh -p 22 ubuntu@ec2-18-204-3-167.compute-1.amazonaws.com
+            ssh -o StrictHostKeyChecking=no ubuntu@ec2-15-223-67-37.ca-central-1.compute.amazonaws.com
             echo "After_1"
-
-
-
-
-
 
   upload_bigmart_model_gfury:
     <<: *defaults
