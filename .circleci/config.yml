@@ -85,6 +85,9 @@ jobs:
       - run:
           name: Connecting to EC2
           command: |
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -b ~/bin/aws
             PUBLIC_IP=$(curl ipinfo.io/ip)
             ~/bin/aws ec2 authorize-security-group-ingress --region $AWS_REGION \
                 --protocol tcp --port 22 --cidr $PUBLIC_IP/24
@@ -112,11 +115,5 @@ workflows:
     jobs:
       - test_bigmart_model
       - test_ml_api
-      - upload_bigmart_model_ecr
-      - upload_bigmart_model_gfury
-      - test_ml_api:
-          requires:
-            - upload_bigmart_model_ecr
-            - upload_bigmart_model_gfury
       - run_bigmart_ec2
 
