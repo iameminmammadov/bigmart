@@ -85,10 +85,7 @@ jobs:
       - run:
           name: Connecting to EC2
           command: |
-            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-            unzip awscli-bundle.zip
-            ./awscli-bundle/install -b ~/bin/aws
-            PUBLIC_IP=$(curl ipinfo.io/ip)
+            sudo apt-get install awscli
             echo $SG_ID
 
   upload_bigmart_model_gfury:
@@ -112,6 +109,5 @@ workflows:
   test-all:
     jobs:
       - test_bigmart_model
-      - test_ml_api
       - run_bigmart_ec2
 
