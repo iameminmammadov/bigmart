@@ -85,13 +85,11 @@ jobs:
       - run:
           name: Connecting to EC2
           command: |
-            ssh -t ubuntu@ec2-15-223-67-37.ca-central-1.compute.amazonaws.com <<-'ENDSSH'
-                  ls
-                  pwd
-            ENDSSH
-
-
-
+            EC2_USERNAME=ubuntu
+            EC2_PUBLIC_DNS=ec2-15-223-67-37.ca-central-1.compute.amazonaws.com
+            echo "SSHing"
+            ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS \
+            pwd
 
   upload_bigmart_model_gfury:
     <<: *defaults
