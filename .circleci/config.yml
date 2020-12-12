@@ -85,10 +85,21 @@ jobs:
       - run:
           name: Connecting to EC2
           command: |
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -b ~/bin/aws
             PUBLIC_IP=$(curl ipinfo.io/ip)
+            AWS_REGION=ca-central-1
+            SG_ID=sg-036c06519db0ee292
             echo "Before_1"
-            ssh -o StrictHostKeyChecking=no ubuntu@ec2-15-223-67-37.ca-central-1.compute.amazonaws.com
-            echo "After_1"
+            ~/bin/aws ec2 authorize-security-group-ingress --region $AWS_REGION --group-id $SG_ID \
+                          --protocol tcp --port 22 --cidr $PUBLIC_IP/24
+            sleep 5
+            EC2_USERNAME=ubuntu
+            EC2_PUBLIC_DNS=application-server.example.com
+            ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS \
+            pwd
+
 
   upload_bigmart_model_gfury:
     <<: *defaults
