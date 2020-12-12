@@ -96,9 +96,11 @@ jobs:
                           --protocol tcp --port 22 --cidr $PUBLIC_IP/24
             sleep 5
             EC2_USERNAME=ubuntu
-            EC2_PUBLIC_DNS=application-server.example.com
+            EC2_PUBLIC_DNS=ec2-15-223-67-37.ca-central-1.compute.amazonaws.com
             ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_PUBLIC_DNS \
             pwd
+
+          
 
 
   upload_bigmart_model_gfury:
